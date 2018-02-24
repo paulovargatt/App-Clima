@@ -1,31 +1,42 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { WeatherProvider } from '../providers/weather/weather';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements AfterViewInit{
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: string = "HomePage";
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              private weather: WeatherProvider) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
-    ];
 
+    this.pages = [
+      { title: 'Home', component: "HomePage" },
+      { title: 'Home', component: "HomePage" },
+    ];
   }
+
+
+  //Após carregar o aplicativo
+  ngAfterViewInit(){
+    this.weather.getGeolocation().then(data =>{
+      console.log(data)
+    })
+  }
+
 
   initializeApp() {
     this.platform.ready().then(() => {
