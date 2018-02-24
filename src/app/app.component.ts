@@ -14,26 +14,27 @@ export class MyApp implements AfterViewInit{
 
   rootPage: string = "HomePage";
 
-  pages: Array<{title: string, component: any}>;
+  pages: any[] = [];
 
   constructor(public platform: Platform,
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
-              private weather: WeatherProvider) {
+              private weather: WeatherProvider)
+  {
     this.initializeApp();
 
-
-    this.pages = [
-      { title: 'Home', component: "HomePage" },
-      { title: 'Home', component: "HomePage" },
-    ];
   }
 
 
   //Após carregar o aplicativo
   ngAfterViewInit(){
-    this.weather.getGeolocation().then(data =>{
-      console.log(data)
+    this.weather.getGeolocation().then(resp =>{
+      let longitude = resp.coords.longitude;
+      let latitude = resp.coords.latitude;
+      this.weather.currentWeather(longitude, latitude)
+        .subscribe(res =>{
+          console.log(res);
+        })
     })
   }
 
