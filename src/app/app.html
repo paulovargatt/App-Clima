@@ -1,15 +1,21 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title>Configurações da Cidade</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+    <ion-list *ngFor="let p of pages">
+        <button ion-item menuClose (click)="openPage(p)">
+            <ion-avatar item-left>
+              <img src="{{p.icon}}">
+            </ion-avatar>
+          {{p.weather.name}}
+          <ion-badge item-end>
+            {{p.weather.main.temp}}&deg;
+          </ion-badge>
+        </button>
     </ion-list>
   </ion-content>
 
